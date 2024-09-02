@@ -1,0 +1,4 @@
+using fs module to write something in txt filehello diwak !
+hello diwak !
+hello diwak !
+hello diwak !

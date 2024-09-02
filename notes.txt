@@ -1,0 +1,93 @@
+const fs=require('fs');
+const os=require('os');
+
+let user=os.userInfo();
+// console.log(user);
+
+let content ="using fs module to write something in txt file";
+fs.appendFile("greeting.txt","hello "+user.username+" !\n",()=>{
+    console.log("file is succesfully created!");
+});
+
+
+
+const temp=require("./temp.js");
+const _=require('lodash');
+let res=temp.addnumber(temp.age,9);
+console.log(res);
+let arr=["arpit",1,3,1,5,9,5,"arpit"];
+// let uniqarr=_.isString(d);
+console.log(_.isString("299"));
+
+
+// const { json } = require("express");
+
+const obj={
+    "Name": "Arpit singh",
+    "Age": 20,
+    "Role": "SDE"
+};
+let jsonstring=JSON.stringify(obj);
+// console.log(jsonstring);
+let objectfromjson=JSON.parse(jsonstring);
+console.log(objectfromjson);
+
+
+const express=require('express');
+const app=express();// waiter
+app.get("/",(req,res)=>{
+    res.send("hello ");
+});
+app.get("/food",(req,res)=>{
+    res.send("You Food is being Cooking");
+});
+app.get("/south_indian",(req,res)=>{
+    let items={
+        Name:"idli vada",
+        Is_Sambhar:true,
+        Is_nonveg:false,
+        Is_Chutney:true,
+        size: "10 cm Diameter"
+    }
+    let str=JSON.stringify(items);
+    res.send(str);
+});
+app.get("/nonveg",(req,res)=>{
+    res.send("Your non-veg Food is being Cooking");
+});
+app.listen(3000,()=>{
+    console.log("server using port 3000");
+});
+
+
+
+
+const express=require('express');
+const app=express();// waiter
+const db=require('./db.js');
+const Person=require('./model/person.js');
+
+const bodyparser=require('body-parser');
+
+app.use(bodyparser.json());// saved to req.body
+app.get("/",(req,res)=>{
+    res.send("hello");
+});
+
+app.post("/person",async (req,res)=>{
+   try {
+    const data =req.body;
+
+    const newperson=new Person(data);
+    const response= await newperson.send();
+    console.log("Data stored Successfull!");
+    res.status(200).json(response);
+   } catch (err) {
+     console.log(err);
+     res.status(500).json({error:"Internal Server Error"});
+   }
+
+});
+app.listen(3000,()=>{
+    console.log("server using port 3000");
+});
